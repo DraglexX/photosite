@@ -1,1 +1,1 @@
-web: gunicorn tessst.wsgi --log-file -
+web: gunicorn photosite.wsgi --log-file -
