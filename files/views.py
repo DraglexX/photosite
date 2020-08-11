@@ -140,7 +140,7 @@ def album(request, alb_id):
 
 def home(request):
     albums = Album.objects.all()
-    return render(request, 'home.html', {
+    return render(request, 'index.html', {
         'albums': albums
     })
 
