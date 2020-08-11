@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Edit photo{% endblock %}
+
+{% block content %}
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1>{{ album.title }}</h1>
+        <p class="lead text-muted">{{ album.description }}</p>
+        <a href="/album/{{ album.id }}" class="btn btn-secondary my-2">Back to album</a>
+    </div>
+</section>
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_title">Photo title:</label>
+            <input type="text" name="title" maxlength="50" required="" id="id_title" value="{{ image.title }}">
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary">Edit</button>
+    </form>
+</div>
+{% endblock %}

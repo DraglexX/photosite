@@ -1,0 +1,1 @@
+web: gunicorn tessst.wsgi --log-file -

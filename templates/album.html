@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}{{ album.title }}{% endblock %}
+
+{% block content %}
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1>{{ album.title }}</h1>
+        <p class="lead text-muted">{{ album.description }}</p>
+        {% if user.username == album.author %}
+        <a href="/album/{{ alb_id }}/upload" class="btn btn-primary my-2">Add photos in album</a>
+        <a href="/album/{{ alb_id }}/edit" class="btn btn-info my-2">Edit title and description</a>
+        {% endif %}
+        <a href="/" class="btn btn-secondary my-2">Back to home</a>
+    </div>
+</section>
+<div class="container list-group">
+    {% for image in images.object_list %}
+    <div class="list-group-item d-flex">
+        {% load thumbnail %}
+        {% thumbnail image.image "200" as im %}
+            <a href="{{ image.image.url }}" class="img-thumbnail">
+              <img src="{{ im.url }}" width="35" height="35">
+              <a href="{{ image.image.url }}" class="list-group-item-action align-text-middle clip text-center" style="text-overflow: ellipsis; padding: 10px;">{{ image.title }}</a>
+            </a>
+        {% endthumbnail %}
+        {% if user.username == album.author %}
+        <div class="btn-group">
+            <button class="btn-sm btn-outline-info custom" onclick="document.location='{{ album.id }}/image/{{ image.id }}/edit'">Edit</button>
+            <button class="btn-sm ml-sm-2 btn-outline-danger custom" onclick="document.location='{{ album.id }}/image/{{ image.id }}/delete'">Delete</button>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <br>
+    {% if is_paginated %}
+        <nav aria-label="..." class="m-auto">
+            <ul class="pagination ">
+                <li class="page-item {% if not prev_url %} disabled {% endif %}">
+                    <a class="page-link" href="{{ prev_url }}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                    {% for n in images.paginator.page_range %}
+                        {% if images.number == n %}
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="?page={{ n }}">{{ n }}<span class="sr-only">(current)</span></a>
+                            </li>
+                        {% elif n > images.number|add:-3 and n < images.number|add:3 %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                <li class="page-item {% if not next_url %} disabled {% endif %}">
+                    <a class="page-link" href="{{ next_url }}" tabindex="-1" aria-disabled="true">Next</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif%}
+</div>
+
+<style>
+    a.clip {
+        white-space: nowrap; /* Запрещаем перенос строк */
+        overflow: hidden; /* Обрезаем все, что не помещается в область */
+        text-overflow: ellipsis; /* Добавляем многоточие */
+    }
+</style>
+
+{% endblock %}

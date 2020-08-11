@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Edit album{% endblock %}
+
+{% block content %}
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1>Edit album</h1>
+        <p class="lead text-muted">This you can edit album</p>
+        <a href="/" class="btn btn-secondary my-2">Back to home</a>
+    </div>
+</section>
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" type="hidden" name="author" id="Author" value="{{ user.username }}" readonly required>
+        </div>
+        <div class="form-group">
+            <label for="Album title">Album title:</label>
+            <input class="form-control" type="text" name="title" maxlength="20" id="Album title" value="{{ album.title }}" required>
+        </div>
+        <div class="form-group">
+            <label for="Album description">Album description:</label>
+            <textarea class="form-control" name="description" id="Album description" maxlength="150" required>{{ album.description }}</textarea>
+        </div>
+        <button class="btn btn-lg btn-primary">Edit</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Upload photo{% endblock %}
+
+{% block content %}
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1>{{ album.title }}</h1>
+        <p class="lead text-muted">{{ album.description }}</p>
+        <a href="/album/{{alb_id}}" class="btn btn-secondary my-2">Back to album</a>
+    </div>
+</section>
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_title">Photo title:</label>
+            <input type="text" name="title" maxlength="128" required="" id="id_title">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="hidden" name="album_id" id="id_album_id" value="{{ alb_id }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="id_image">Image:</label>
+            <input type="file" name="image" accept="image/*" required="" id="id_image">
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary">Upload</button>
+    </form>
+</div>
+{% endblock %}
