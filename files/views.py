@@ -4,7 +4,7 @@ from django.views.generic.base import View
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
-from .models import Album, Image
+from photosite.models import Album, Image
 from .forms import ImageForm
 from django.core.paginator import Paginator
 
