@@ -1,5 +1,5 @@
 from django.urls import path
-from files import views
+from pmg import views
 
 urlpatterns = [
     path('album/<int:alb_id>', views.album),
